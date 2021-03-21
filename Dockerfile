@@ -8,7 +8,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 
 FROM scratch
 
-COPY --from=0 /go/src/github.com/rcarrata/go-flight/app .
+COPY --from=0 /go/src/github.com/rcarrata/go-flight/main .
 
 EXPOSE 8080
 
