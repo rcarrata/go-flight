@@ -13,6 +13,7 @@ func main() {
 
 	port := ":8080"
 
+	// Start the Router with the func NewRouter() in routes.go
 	router := mux.NewRouter()
 
 	log.Printf("Server running in port %s", port)
