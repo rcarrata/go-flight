@@ -3,8 +3,6 @@ package main
 import (
 	"log"
 	"net/http"
-
-	"github.com/gorilla/mux"
 )
 
 // Flights -> Name, flight id, duration, Destination
@@ -14,7 +12,7 @@ func main() {
 	port := ":8080"
 
 	// Start the Router with the func NewRouter() in routes.go
-	router := mux.NewRouter()
+	router := NewRouter()
 
 	log.Printf("Server running in port %s", port)
 	log.Fatal(http.ListenAndServe(port, router))
