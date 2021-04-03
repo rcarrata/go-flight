@@ -3,6 +3,8 @@ package main
 import (
 	"log"
 	"net/http"
+
+	"github.com/rcarrata/go-flight/pkg/api"
 )
 
 // Flights -> Name, flight id, duration, Destination

@@ -1,4 +1,4 @@
-package main
+package api
 
 type Flight struct {
 	Origin      string `json:"name"`
