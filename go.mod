@@ -1,4 +1,4 @@
-module pkg/api
+module github.com/rcarrata/go-flight
 
 go 1.15
 

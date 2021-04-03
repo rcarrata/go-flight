@@ -3,15 +3,18 @@ package api
 import (
 	"encoding/json"
 	"fmt"
-	"html"
 	"net/http"
+	"path"
 
 	"github.com/gorilla/mux"
 )
 
 // Index Path API Rest
 func Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
+	// fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
+	p := path.Dir("./templates/")
+	w.Header().Set("Content-type", "text/html")
+	http.ServeFile(w, r, p)
 }
 
 //
