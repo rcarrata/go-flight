@@ -4,7 +4,9 @@ RUN go get github.com/rcarrata/go-flight && go get github.com/gorilla/mux
 
 WORKDIR /go/src/github.com/rcarrata/go-flight/
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
+COPY . /go/src/github.com/rcarrata/go-flight/
+
+RUN CGO_ENABLED=0 GOOS=linux go build -installsuffix cgo -o main .
 
 FROM scratch
 
