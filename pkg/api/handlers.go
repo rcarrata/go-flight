@@ -3,6 +3,8 @@ package api
 import (
 	"encoding/json"
 	"fmt"
+	"io"
+	"io/ioutil"
 	"net/http"
 	"path"
 
@@ -21,21 +23,6 @@ func Index(w http.ResponseWriter, r *http.Request) {
 func FlightIndex(w http.ResponseWriter, r *http.Request) {
 	// fmt.Fprintf(w, "These are the flights index")
 
-	flights := Flights{
-		Flight{
-			Origin:      "Vancouver",
-			Id:          1,
-			Duration:    10,
-			Destination: "Rome",
-		},
-		Flight{
-			Origin:      "Madrid",
-			Id:          2,
-			Duration:    5,
-			Destination: "Amsterdam",
-		},
-	}
-
 	// Add Return Headers to the response
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -53,4 +40,44 @@ func FlightShow(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	flightId := vars["flightId"]
 	fmt.Fprintln(w, "Showing Flight num:", flightId)
+}
+
+// Create Flight func
+func FlightCreate(w http.ResponseWriter, r *http.Request) {
+	// create a new flight struct variable to use
+	var flight Flight
+
+	// Read all the body, and set a limitreader
+	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
+	if err != nil {
+		panic(err)
+	}
+
+	// Close the content of the body
+	if err := r.Body.Close(); err != nil {
+		panic(err)
+	}
+
+	// Set all of body into an instance of a struct Flight
+	if err := json.Unmarshal(body, &flight); err != nil {
+		// If you receive an error send back a 422 Unprocessable Entity
+		w.Header().Set("Content-Type", "application/json, charset=UTF-8")
+		w.WriteHeader(422)
+
+		// send back the err in a json string
+		if err := json.NewEncoder(w).Encode(err); err != nil {
+			panic(err)
+		}
+	}
+
+	// Create a flight and append into flights array
+	f := dbCreateFlight(flight)
+	w.Header().Set("Content-Type", "application/json, charset=UTF-8")
+	w.WriteHeader(http.StatusCreated)
+
+	// Sending back the representation of entity we created,
+	// containing the id of the flight
+	if err := json.NewEncoder(w).Encode(f); err != nil {
+		panic(err)
+	}
 }

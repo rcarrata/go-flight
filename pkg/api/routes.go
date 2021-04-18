@@ -35,4 +35,10 @@ var routes = Routes{
 		Pattern:    "/flight/{flightId}",
 		HandleFunc: FlightShow,
 	},
+	Route{
+		Name:       "FlightCreate",
+		Method:     "POST",
+		Pattern:    "/flights",
+		HandleFunc: FlightCreate,
+	},
 }

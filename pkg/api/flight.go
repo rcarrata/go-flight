@@ -1,8 +1,8 @@
 package api
 
 type Flight struct {
-	Origin      string `json:"name"`
 	Id          int    `json:"id"`
+	Origin      string `json:"name"`
 	Duration    int    `json:"duration"`
 	Destination string `json:"destination"`
 }
