@@ -36,8 +36,17 @@ func FlightIndex(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
+	// Add Return Headers to the response
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	// Add status OK to the response
+	w.WriteHeader(http.StatusOK)
+
 	// Call json.NewEncoder(w).Encoder(flights) to write JSON to the server
-	json.NewEncoder(w).Encode(flights)
+	err := json.NewEncoder(w).Encode(flights)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func FlightShow(w http.ResponseWriter, r *http.Request) {
